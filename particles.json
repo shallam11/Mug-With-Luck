@@ -54,11 +54,11 @@
     },
     "move": {
       "enable": true,
-      "speed": 0.5,
+      "speed": 2,
       "direction": "none",
       "random": false,
       "straight": false,
-      "out_mode": "bounce",
+      "out_mode": "out",
       "bounce": false,
       "attract": {
         "enable": false,
