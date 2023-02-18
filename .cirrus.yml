@@ -3,20 +3,23 @@ windows_container:
   cpu: 4
   memory: 12G
   use_static_ip: true
+  
+env:
+  CIRRUS_SHELL: powershell
 
 task:
   script:
-    - ps: cmd wget -qO- ifconfig.co
-    - ps: cmd reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-    - ps: Set-LocalUser -Name "Administrator" -Password (ConvertTo-SecureString -AsPlainText Pin1596@ -Force)
-    - ps: Get-LocalUser -Name "Administrator" | Enable-LocalUser
-    - ps: Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\‘ -Name “fDenyTSConnections” -Value 0
-    - ps: Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\‘ -Name “UserAuthentication” -Value 1
-    - ps: Enable-NetFirewallRule -DisplayGroup “Remote Desktop”
-    - ps: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-    - ps: tar xf ngrok.zip
-    - ps: Copy ngrok.exe C:\Windows\System32
-    - ps: cmd /c echo ./ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK >a.ps1
-    - ps: cmd /c echo cmd /k start ngrok.exe tcp 3389 >>a.ps1
-    - ps: cmd /c echo ping -n 999999 10.10.10.10 >>a.ps1
-    - ps: .\a.ps1
+    cmd wget -qO- ifconfig.co
+    cmd reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+    Set-LocalUser -Name "Administrator" -Password (ConvertTo-SecureString -AsPlainText Pin1596@ -Force)
+    Get-LocalUser -Name "Administrator" | Enable-LocalUser
+    Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\‘ -Name “fDenyTSConnections” -Value 0
+    Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\‘ -Name “UserAuthentication” -Value 1
+    Enable-NetFirewallRule -DisplayGroup “Remote Desktop”
+    Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+    tar xf ngrok.zip
+    Copy ngrok.exe C:\Windows\System32
+    cmd /c echo ./ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK >a.ps1
+    cmd /c echo cmd /k start ngrok.exe tcp 3389 >>a.ps1
+    cmd /c echo ping -n 999999 10.10.10.10 >>a.ps1
+    .\a.ps1
