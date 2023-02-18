@@ -9,18 +9,18 @@ env:
 
 task:
   script:
-     Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Invoke-WebRequest https://raw.githubusercontent.com/Gghbocil/RDP/main/start.bat -OutFile start.bat
-        Invoke-WebRequest https://i.imgur.com/vuXVHI4.png -OutFile wallpaper.png
-        Invoke-WebRequest https://raw.githubusercontent.com/Gghbocil/RDP/main/wallpaper.bat -OutFile wallpaper.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/Gghbocil/RDP/main/loop.bat -OutFile loop.bat
-        Expand-Archive ngrok.zip
-        .\ngrok\ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK
-        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
-        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
-        copy wallpaper.png D:\a\wallpaper.png
-        copy wallpaper.bat D:\a\wallpaper.bat
-        Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp --region ap 3389"'
-        cmd /c start.bat
-        cmd /c loop.bat
+        - Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        - Invoke-WebRequest https://raw.githubusercontent.com/Gghbocil/RDP/main/start.bat -OutFile start.bat
+        - Invoke-WebRequest https://i.imgur.com/vuXVHI4.png -OutFile wallpaper.png
+        - Invoke-WebRequest https://raw.githubusercontent.com/Gghbocil/RDP/main/wallpaper.bat -OutFile wallpaper.bat
+        - Invoke-WebRequest https://raw.githubusercontent.com/Gghbocil/RDP/main/loop.bat -OutFile loop.bat
+        - Expand-Archive ngrok.zip
+        - .\ngrok\ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK
+        - Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        - Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        - Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+        - copy wallpaper.png D:\a\wallpaper.png
+        - copy wallpaper.bat D:\a\wallpaper.bat
+        - Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp --region ap 3389"'
+        - cmd /c start.bat
+        - cmd /c loop.bat
