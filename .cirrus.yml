@@ -1,9 +1,7 @@
-container:
-  image: node:latest
+windows_container:
+  image: cirrusci/windowsservercore:2019
+  cpu: 4
+  memory: 12G
 
-check_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat yarn.lock
-    populate_script: yarn install
-  test_script: yarn test
+task:
+  script: lscpu
