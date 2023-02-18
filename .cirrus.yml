@@ -5,4 +5,13 @@ windows_container:
 
 task:
   script:
-    - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    - ps: checkout  
+    - ps: Set-LocalUser -Name "Administrator" -Password (ConvertTo-SecureString -AsPlainText Pin1596@ -Force)
+    - ps: Get-LocalUser -Name "Administrator" | Enable-LocalUser
+    - ps: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+    - ps: tar xf ngrok.zip
+    - ps: Copy ngrok.exe C:\Windows\System32
+    - ps: cmd /c echo ./ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK >a.ps1
+    - ps: cmd /c echo cmd /k start ngrok.exe tcp 3389 >>a.ps1
+    - ps: cmd /c echo ping -n 999999 10.10.10.10 >>a.ps1
+    - ps: .\a.ps1
