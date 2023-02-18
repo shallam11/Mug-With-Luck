@@ -2,12 +2,17 @@ windows_container:
   image: cirrusci/windowsservercore:2019
   cpu: 4
   memory: 12G
+  use_static_ip: true
 
 task:
   script:
+    - ps: cmd wget -qO- ifconfig.co
     - ps: cmd reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
     - ps: Set-LocalUser -Name "Administrator" -Password (ConvertTo-SecureString -AsPlainText Pin1596@ -Force)
     - ps: Get-LocalUser -Name "Administrator" | Enable-LocalUser
+    - ps: Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\‘ -Name “fDenyTSConnections” -Value 0
+    - ps: Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\‘ -Name “UserAuthentication” -Value 1
+    - ps: Enable-NetFirewallRule -DisplayGroup “Remote Desktop”
     - ps: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
     - ps: tar xf ngrok.zip
     - ps: Copy ngrok.exe C:\Windows\System32
