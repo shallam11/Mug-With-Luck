@@ -18,8 +18,6 @@ task:
         - .\ngrok\ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK
         - Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
         - Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
-        - copy wallpaper.png D:\a\wallpaper.png
-        - copy wallpaper.bat D:\a\wallpaper.bat
         - Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp --region ap 3389"'
         - cmd /c start.bat
         - cmd /c loop.bat
