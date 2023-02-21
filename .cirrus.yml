@@ -9,4 +9,11 @@ env:
 
 task:
   script:
-
+        - Invoke-WebRequest https://cdn.discordapp.com/attachments/939580443404161054/1077643809061621840/UltraVNC_1_4_06_X64_Setup.exe -OutFile Ultra.exe
+        - .\Ultra.exe /verysilent
+        - Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        - Expand-Archive ngrok.zip
+        - .\ngrok\ngrok.exe authtoken 1sG77Yu0gc4U9QRyEW9BIpjAh1W_LQNFV9NyQWekE68tiHKK
+        - Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        - Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+        - Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp --region eu 5900"'
