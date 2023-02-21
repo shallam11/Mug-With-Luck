@@ -1,6 +1,6 @@
 windows_container:
   image: cirrusci/windowsservercore:2019
-  cpu: 4
+  cpu: 5
   memory: 12G
   use_static_ip: true
   
